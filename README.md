@@ -13,18 +13,24 @@ http://localhost:8080/api/v1/swagger-ui.html
 ## API Path
 http://localhost:8080/api/v1/
 
+## MYSQL Location
+jdbc:mysql://db:3306/microwallet_db
+
 For initialize test database from RESTApi with test curl requests 
 ```bash
 chmod +x curl.sh
 ./curl.sh
 ```
 
-Application can run from *microwallet/MicroWalletApplication.java* without any extra installations with enable **H2DB** settings from application.properties
-
-### Run Main Application
+### Manuel Run Main Application
 ```bash
-
+cd mocrowallet/
+mvn spring-boot:run
 ```
+
+### Run Test Sources
+
+Since test cases are includes DataJpaTest feature, before the run tests please enable **h2db** configuration from *application.properties* file
 
 #### Docker Compose Installations
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-centos-7
