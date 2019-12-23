@@ -13,7 +13,11 @@ http://localhost:8080/api/v1/swagger-ui.html
 ## API Path
 http://localhost:8080/api/v1/
 
-For initialize test database from RESTApi with test curl requests  look out the *./curl.sh*  file.
+For initialize test database from RESTApi with test curl requests 
+```bash
+chmod +x curl.sh
+./curl.sh
+```
 
 Application can run from *microwallet/MicroWalletApplication.java* without any extra installations with enable **H2DB** settings from application.properties
 
