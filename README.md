@@ -30,7 +30,7 @@ mvn spring-boot:run
 
 ### Run Test Sources
 
-Since test cases are includes DataJpaTest feature, before the run tests please enable **h2db** configuration from *application.properties* file
+Since test cases are includes DataJpaTest feature,please enable **h2db** configuration from *application.properties* file priorly
 
 #### Docker Compose Installations
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-centos-7
