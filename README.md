@@ -14,7 +14,7 @@ http://localhost:8080/api/v1/swagger-ui.html
 http://localhost:8080/api/v1/
 
 ## MYSQL Location
-jdbc:mysql://db:3306/microwallet_db
+*jdbc:mysql://db:3306/microwallet_db*
 
 For initialize test database from RESTApi with test curl requests 
 ```bash
