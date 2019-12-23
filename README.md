@@ -3,6 +3,7 @@ Docker Mysql SpringBoot Microservice Demo
 
 ### run with
 ```bash
+git clone https://github.com/ogz00/Micro-Wallet-Leo-Oguz.git
 docker-compose up
 ```
 
