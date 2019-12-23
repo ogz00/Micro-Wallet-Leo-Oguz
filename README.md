@@ -22,15 +22,16 @@ chmod +x curl.sh
 ./curl.sh
 ```
 
+### Run Test Sources
+Since test cases are includes DataJpaTest feature,please enable **h2db** configuration from *application.properties* file priorly
+
 ### Manuel Run Main Application
 ```bash
 cd mocrowallet/
 mvn spring-boot:run
 ```
+In case of prefer to run with in-memory database, application could be run with h2db configuration as explained above.
 
-### Run Test Sources
-
-Since test cases are includes DataJpaTest feature,please enable **h2db** configuration from *application.properties* file priorly
 
 #### Docker installation
 https://docs.docker.com/install/linux/docker-ce/centos/
