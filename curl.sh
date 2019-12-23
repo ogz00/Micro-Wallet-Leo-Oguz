@@ -43,7 +43,7 @@ curl -X POST http://localhost:8080/api/v1/player \
 curl http://localhost:8080/api/v1/player \
     -H 'Content-Type: application/json'
 
-//Change Id according to response before
+#Change Id according to response before
 
 curl -X POST http://localhost:8080/api/v1/wallet \
 -H 'Content-Type: application/json' \
@@ -75,6 +75,9 @@ curl -X POST http://localhost:8080/api/v1/transaction \
     "transactionType": 2
 }'
 
+curl http://localhost:8080/api/v1/wallet/1 \
+    -H 'Content-Type: application/json'
+
 curl http://localhost:8080/api/v1/wallet/1/transactions \
     -H 'Content-Type: application/json'
 
@@ -84,3 +87,24 @@ curl http://localhost:8080/api/v1/player/1/transactions \
 
 curl http://localhost:8080/api/v1/transaction/1 \
     -H 'Content-Type: application/json'
+
+
+# Invalid suppliedId error
+curl -X POST http://localhost:8080/api/v1/transaction \
+-H 'Content-Type: application/json' \
+-d '{
+    "suppliedId" : 2,
+    "amount": "12.25",
+    "walletId": 1,
+    "transactionType": 2
+}'
+
+# Insufficient Balance error
+curl -X POST http://localhost:8080/api/v1/transaction \
+-H 'Content-Type: application/json' \
+-d '{
+    "suppliedId" : 3,
+    "amount": "112.25",
+    "walletId": 1,
+    "transactionType": 2
+}'
