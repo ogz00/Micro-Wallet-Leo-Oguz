@@ -49,7 +49,7 @@ public class WalletControllerTest {
     @Before
     public void before() {
         CurrencyDto currencyDto = new CurrencyDto(1, CURRENCY_NAME, CURRENCY_CODE);
-        PlayerDto playerDto = new PlayerDto(1L, PLAYER_NAME, PLAYER_COUNTRY);
+        PlayerDto playerDto = new PlayerDto(1L, PLAYER_NAME, PLAYER_USERNAME, PLAYER_PASSWORD, PLAYER_COUNTRY);
 
         walletDto = new WalletDto.Builder().setCurrencyId(currencyDto.getId()).setId(1L)
                 .setPlayerId(playerDto.getId())

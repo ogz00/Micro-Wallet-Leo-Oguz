@@ -7,5 +7,5 @@ import javax.transaction.Transactional;
 
 @Transactional
 public interface PlayerRepository extends JpaRepository<Player, Long> {
-    Player findByName(String name);
+    Player findByUsername(String username);
 }

@@ -1,6 +1,6 @@
 package com.oguz.demo.microwallet.repository;
 
-import com.oguz.demo.microwallet.config.PersistenceConfig;
+import com.oguz.demo.microwallet.config.PersistenceContext;
 import com.oguz.demo.microwallet.entity.Currency;
 import com.oguz.demo.microwallet.entity.Player;
 import com.oguz.demo.microwallet.entity.Wallet;
@@ -24,7 +24,7 @@ import static org.springframework.context.annotation.FilterType.ASSIGNABLE_TYPE;
 @RunWith(SpringRunner.class)
 @DataJpaTest(includeFilters = @ComponentScan.Filter(
         type = ASSIGNABLE_TYPE,
-        classes = {AuditorAwareImpl.class, PersistenceConfig.class}))
+        classes = {AuditorAwareImpl.class, PersistenceContext.class}))
 public class WalletRepositoryTest {
     @Autowired
     TestEntityManager entityManager;

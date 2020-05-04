@@ -6,6 +6,8 @@ import java.math.RoundingMode;
 public class TestConstants {
 
     public static final String PLAYER_NAME = "Test Player";
+    public static final String PLAYER_USERNAME = "Username";
+    public static final String PLAYER_PASSWORD = "TestPassword";
     public static final String PLAYER_COUNTRY = "Country";
     public static final String CURRENCY_NAME = "Test Currency";
     public static final String CURRENCY_CODE = "TCR";

@@ -53,7 +53,8 @@ public final class Mapper {
     public static PlayerDto from(Player player) {
         PlayerDto dto = new PlayerDto();
         dto.setCountry(player.getCountry());
-        dto.setName(player.getName());
+        dto.setName(player.getFullName());
+        dto.setUsername(player.getUsername());
         dto.setId(player.getId());
         return dto;
     }
@@ -61,7 +62,9 @@ public final class Mapper {
     public static Player from(PlayerDto dto) {
         Player player = new Player();
         player.setCountry(dto.getCountry());
-        player.setName(dto.getName());
+        player.setUsername(dto.getUsername());
+        player.setFullName(dto.getName());
+        player.setPassword(dto.getPassword());
         return player;
     }
 

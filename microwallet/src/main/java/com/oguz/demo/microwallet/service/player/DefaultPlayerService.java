@@ -11,6 +11,7 @@ import com.oguz.demo.microwallet.repository.WalletRepository;
 import com.oguz.demo.microwallet.service.transaction.TransactionBaseService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +51,7 @@ public class DefaultPlayerService implements PlayerService {
     public PlayerDto get(@NotNull Long id) throws MicroWalletException {
         Player player = Optional.of(playerRepository.findById(id)).get().orElseThrow(
                 () -> MicroWalletException.Builder.newInstance().buildWithStringFormatter(PLAYER_NOT_FOUND, String.valueOf(id)));
-        log.debug("Player found with id=" + player.getId());
+        log.debug("Player found with id=" + id);
         return Mapper.from(player);
     }
 
@@ -61,10 +62,10 @@ public class DefaultPlayerService implements PlayerService {
     @Override
     @Transactional(rollbackFor = MicroWalletException.class)
     public List<WalletDto> transactionsByPlayerName(String playerName) {
-        Player player = Optional.ofNullable(playerRepository.findByName(playerName)).orElseThrow(
+        Player player = Optional.ofNullable(playerRepository.findByUsername(playerName)).orElseThrow(
                 () -> MicroWalletException.Builder.newInstance().buildWithStringFormatter(PLAYER_NOT_FOUND, playerName));
         List<Wallet> wallets = walletRepository.findByPlayer(player);
-        log.debug("Transactions found for playerName=" + player.getName());
+        log.debug("Transactions found for playerName=" + player.getUsername());
         return wallets.stream()
                 .map(w -> Mapper.from(w, w.getTransactions().stream()
                         .map(Mapper::from).collect(Collectors.toList())))
@@ -73,7 +74,6 @@ public class DefaultPlayerService implements PlayerService {
     }
 
     /**
-     *
      * @param id
      * @return
      */
@@ -96,17 +96,16 @@ public class DefaultPlayerService implements PlayerService {
     }
 
     /**
-     *
      * @param playerName
      * @return
      */
     @Override
     @Transactional(rollbackFor = MicroWalletException.class)
     public List<WalletDto> walletsByPlayerName(String playerName) {
-        Player player = Optional.ofNullable(playerRepository.findByName(playerName)).orElseThrow(
+        Player player = Optional.ofNullable(playerRepository.findByUsername(playerName)).orElseThrow(
                 () -> MicroWalletException.Builder.newInstance().buildWithStringFormatter(PLAYER_NOT_FOUND, playerName));
         List<Wallet> wallets = walletRepository.findByPlayer(player);
-        log.debug("Wallets found for playerName=" + player.getName());
+        log.debug("Wallets found for playerName=" + player.getUsername());
         return wallets.stream()
                 .map(w -> Mapper.from(w, transactionService.calculateCurrentBalance(w.getId())))
                 .collect(Collectors.toList());
@@ -125,6 +124,13 @@ public class DefaultPlayerService implements PlayerService {
         return wallets.stream()
                 .map(w -> Mapper.from(w, transactionService.calculateCurrentBalance(w.getId())))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Player loadByUsername(String username) throws UsernameNotFoundException {
+        Player player = playerRepository.findByUsername(username);
+        if (player != null) return player;
+        throw new UsernameNotFoundException("Player " + username + " not found!");
     }
 
     @Override

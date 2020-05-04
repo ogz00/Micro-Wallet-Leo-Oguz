@@ -55,7 +55,7 @@ public class DefaultPlayerServiceTest {
 
         player = mock(Player.class);
         when(player.getId()).thenReturn(1L);
-        when(player.getName()).thenReturn("name");
+        when(player.getUsername()).thenReturn("name");
         when(player.getCountry()).thenReturn("country");
 
         wallet = mock(Wallet.class);
@@ -92,7 +92,7 @@ public class DefaultPlayerServiceTest {
         PlayerDto dto = playerService.create(Mapper.from(player));
         assertNotNull(dto);
         assertEquals(dto.getCountry(), player.getCountry());
-        assertEquals(dto.getName(), player.getName());
+        assertEquals(dto.getName(), player.getUsername());
     }
 
     @Test
@@ -101,16 +101,16 @@ public class DefaultPlayerServiceTest {
         PlayerDto dto = playerService.get(1L);
         assertNotNull(dto);
         assertEquals(dto.getCountry(), player.getCountry());
-        assertEquals(dto.getName(), player.getName());
+        assertEquals(dto.getName(), player.getUsername());
         assertEquals(dto.getId(), player.getId());
     }
 
     @Test
     public void testTransactionsBy_PlayerName_Success() {
-        when(playerRepository.findByName(anyString())).thenReturn(player);
+        when(playerRepository.findByUsername(anyString())).thenReturn(player);
         when(walletRepository.findByPlayer(any(Player.class))).thenReturn(Collections.singletonList(wallet));
         when(wallet.getTransactions()).thenReturn(transactions);
-        List<WalletDto> walletDtoList = playerService.transactionsByPlayerName(player.getName());
+        List<WalletDto> walletDtoList = playerService.transactionsByPlayerName(player.getUsername());
         assertNotNull(walletDtoList);
         assertEquals(walletDtoList.size(), 1);
         assertEquals(walletDtoList.get(0).getPlayerId(), player.getId());
@@ -120,12 +120,12 @@ public class DefaultPlayerServiceTest {
 
     @Test
     public void testGetTransactionsBy_PlayerName_Failed() throws MicroWalletException {
-        when(playerRepository.findByName(anyString())).thenReturn(null);
+        when(playerRepository.findByUsername(anyString())).thenReturn(null);
         try {
-            playerService.transactionsByPlayerName(player.getName());
+            playerService.transactionsByPlayerName(player.getUsername());
         } catch (MicroWalletException ex) {
             assertNotNull(ex);
-            assertEquals(ex.getMessage(), String.format(PLAYER_NOT_FOUND, player.getName()));
+            assertEquals(ex.getMessage(), String.format(PLAYER_NOT_FOUND, player.getUsername()));
             assertEquals(ex.getStatus(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -157,10 +157,10 @@ public class DefaultPlayerServiceTest {
 
     @Test
     public void testWalletsBy_PlayerName_Success() {
-        when(playerRepository.findByName(anyString())).thenReturn(player);
+        when(playerRepository.findByUsername(anyString())).thenReturn(player);
         when(walletRepository.findByPlayer(any(Player.class))).thenReturn(Collections.singletonList(wallet));
         when(transactionService.calculateCurrentBalance(anyLong())).thenReturn(new BigDecimal(10));
-        List<WalletDto> walletDtoList = playerService.walletsByPlayerName(player.getName());
+        List<WalletDto> walletDtoList = playerService.walletsByPlayerName(player.getUsername());
         assertNotNull(walletDtoList);
         assertEquals(walletDtoList.size(), 1);
         assertEquals(walletDtoList.get(0).getPlayerId(), player.getId());

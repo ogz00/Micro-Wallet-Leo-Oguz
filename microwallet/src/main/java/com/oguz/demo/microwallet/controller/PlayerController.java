@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,6 +34,7 @@ public class PlayerController {
      * @throws MicroWalletException CustomExceptionHandler Object
      */
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('PLAYER') OR hasAuthority('ADMIN_USER')")
     public ResponseEntity<List<PlayerDto>> getAllPlayers() throws MicroWalletException {
         return new ResponseEntity<>(playerService.getAll(), HttpStatus.OK);
     }
@@ -45,6 +47,7 @@ public class PlayerController {
      * @throws MicroWalletException CustomExceptionHandler Object
      */
     @PostMapping
+//    @PreAuthorize("hasAuthority('ADMIN_USER')")
     public ResponseEntity<PlayerDto> createPlayer(@Valid @RequestBody PlayerDto dto) throws MicroWalletException {
         log.debug("Called PlayerController.createPlayer");
         PlayerDto savedDto = playerService.create(dto);
@@ -59,6 +62,7 @@ public class PlayerController {
      * @throws MicroWalletException CustomExceptionHandler Object
      */
     @GetMapping(value = "/{name}/wallets")
+    @PreAuthorize("hasAnyAuthority('PLAYER') OR hasAuthority('ADMIN_USER')")
     public ResponseEntity<List<WalletDto>> getWalletsByPlayerName(@PathVariable("name") String name) throws MicroWalletException {
         return new ResponseEntity<>(playerService.walletsByPlayerName(name), HttpStatus.OK);
     }
@@ -70,6 +74,7 @@ public class PlayerController {
      * @return walletDto list, transactions history were excluded.
      * @throws MicroWalletException CustomExceptionHandler Object
      */
+    @PreAuthorize("hasAnyAuthority('PLAYER') OR hasAuthority('ADMIN_USER')")
     @GetMapping(value = "/{id}/wallets")
     public ResponseEntity<List<WalletDto>> getWalletsByPlayerId(@PathVariable("id") Long id) throws MicroWalletException {
         return new ResponseEntity<>(playerService.walletsByPlayerId(id), HttpStatus.OK);
@@ -84,6 +89,7 @@ public class PlayerController {
      * @return walletDto list, transactions history were included.
      * @throws MicroWalletException CustomExceptionHandler Object
      */
+    @PreAuthorize("hasAnyAuthority('PLAYER') OR hasAuthority('ADMIN_USER')")
     @GetMapping(value = "/{name}/transactionsWithName")
     public ResponseEntity<List<WalletDto>> getTransactionsByPlayerName(@PathVariable("name") String name) throws MicroWalletException {
         return new ResponseEntity<>(playerService.transactionsByPlayerName(name), HttpStatus.OK);
@@ -98,6 +104,7 @@ public class PlayerController {
      * @return walletDto list, transactions history were included.
      * @throws MicroWalletException CustomExceptionHandler Object
      */
+    @PreAuthorize("hasAnyAuthority('PLAYER') OR hasAuthority('ADMIN_USER')")
     @GetMapping(value = "/{id}/transactions")
     public ResponseEntity<List<WalletDto>> getTransactionsByPlayerId(@PathVariable("id") Long id) throws MicroWalletException {
         return new ResponseEntity<>(playerService.transactionsByPlayerId(id), HttpStatus.OK);

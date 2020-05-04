@@ -1,10 +1,7 @@
 package com.oguz.demo.microwallet.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,8 +9,7 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PlayerDto implements Serializable {
     private static final long serialVersionUID = 1234L;
@@ -23,6 +19,14 @@ public class PlayerDto implements Serializable {
     @NotBlank
     @NotNull
     private String name;
+
+    @NotBlank
+    @NotNull
+    private String username;
+
+    @NotBlank
+    @NotNull
+    private String password;
 
     @NotBlank
     @NotNull

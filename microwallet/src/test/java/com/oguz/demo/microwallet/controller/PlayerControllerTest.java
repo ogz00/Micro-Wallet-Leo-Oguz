@@ -47,7 +47,7 @@ public class PlayerControllerTest {
 
         Player player = mock(Player.class);
         when(player.getId()).thenReturn(1L);
-        when(player.getName()).thenReturn("name");
+        when(player.getUsername()).thenReturn("name");
         when(player.getCountry()).thenReturn("country");
         playerDto = Mapper.from(player);
 
