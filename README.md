@@ -27,7 +27,7 @@ Since test cases are includes DataJpaTest feature,please enable **h2db** configu
 
 ### Manuel Run Main Application
 ```bash
-cd mocrowallet/
+cd microwallet/
 mvn spring-boot:run
 ```
 In case of prefer to run with in-memory database, application could be run with h2db configuration as explained above.
